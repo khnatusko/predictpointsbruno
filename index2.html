@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predykcja punktów FPL</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        label {
+            font-weight: bold;
+            margin-top: 10px;
+            display: block;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Predykcja punktów FPL</h1>
+
+    <form method="POST" action="/predict">
+        <label for="minutes_played">Minuty rozegrane:</label>
+        <input type="number" id="minutes_played" name="minutes_played" required>
+
+        <label for="goals_scored">Bramki strzelone:</label>
+        <input type="number" id="goals_scored" name="goals_scored" required>
+
+        <label for="assists">Asysty:</label>
+        <input type="number" id="assists" name="assists" required>
+
+        <label for="clean_sheets">Czyste konto:</label>
+        <input type="number" id="clean_sheets" name="clean_sheets" required>
+
+        <label for="yellow_cards">Żółte kartki:</label>
+        <input type="number" id="yellow_cards" name="yellow_cards" required>
+
+        <label for="red_cards">Czerwone kartki:</label>
+        <input type="number" id="red_cards" name="red_cards" required>
+
+        <label for="opponent_difficulty">Trudność przeciwnika (1-5):</label>
+        <input type="number" id="opponent_difficulty" name="opponent_difficulty" required>
+
+        <button type="submit">Przewiduj punkty</button>
+    </form>
+
+    <!-- Wyświetlanie wyniku predykcji -->
+    {% if prediction %}
+        <div class="result">
+            <p>Przewidywane punkty zawodnika: <strong>{{ prediction }}</strong></p>
+        </div>
+    {% elif error %}
+        <div class="result" style="color: red;">
+            <p>Błąd: {{ error }}</p>
+        </div>
+    {% endif %}
+
+</body>
+</html>
